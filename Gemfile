@@ -40,5 +40,4 @@ gem 'spring',        group: :development
 
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'rest_client'
-
-
+gem 'settingslogic'

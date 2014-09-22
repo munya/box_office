@@ -1,0 +1,14 @@
+defaults: &defaults
+  arrow_pass_host: 'http://arrow-pass.dev/'
+  client:
+    app_key: 'ticket-office-0'
+    
+development:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  arrow_pass_host: 'http://qa.arrowpass.com/'

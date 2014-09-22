@@ -1,4 +1,5 @@
 class PurchasesController < ApplicationController
+  before_action :set_event
   before_action :set_purchase, only: [:show, :edit, :update, :destroy]
 
   # GET /purchases
@@ -24,11 +25,11 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.json
   def create
-    @purchase = Purchase.new(purchase_params)
+    @purchase = @event.purchases.build(purchase_params)
 
     respond_to do |format|
       if @purchase.save
-        format.html { redirect_to @purchase, notice: 'Purchase was successfully created.' }
+        format.html { redirect_to events_path, notice: 'Purchase was successfully created.' }
         format.json { render :show, status: :created, location: @purchase }
       else
         format.html { render :new }
@@ -62,9 +63,13 @@ class PurchasesController < ApplicationController
   end
 
   private
+    def set_event
+      @event = Event.find(params[:event_id])
+    end
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase
-      @purchase = Purchase.find(params[:id])
+      @purchase = @event.purchases.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
