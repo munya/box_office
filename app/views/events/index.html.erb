@@ -1,0 +1,16 @@
+<div class="row">
+  <% @events.each do |event| %>
+    <div class="well">
+      <div class="span4">
+        <div class="hero-unit">
+          <h1>Event: <%= event.identifier %></h1>
+          <p>
+            <a class="btn btn-primary btn-large">
+              Learn more
+            </a>
+          </p>
+        </div>
+      </div>  
+    </div>  
+  <% end %>
+</div>
