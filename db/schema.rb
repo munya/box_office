@@ -13,6 +13,10 @@
 
 ActiveRecord::Schema.define(version: 20140922144439) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "citext"
+
   create_table "events", force: true do |t|
     t.string   "identifier"
     t.datetime "created_at"
