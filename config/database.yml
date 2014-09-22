@@ -11,5 +11,3 @@ test: &test
   <<: *defaults
   database: box_office_test
 
-production:
-  <<: *defaults
