@@ -1,7 +1,7 @@
 class Purchase < ActiveRecord::Base
   belongs_to :event
   
-  # after_create :send_request_to_arrow_pass
+  after_create :send_request_to_arrow_pass
   
   private
   
