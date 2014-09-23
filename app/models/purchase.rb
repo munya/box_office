@@ -6,15 +6,12 @@ class Purchase < ActiveRecord::Base
   private
   
   def send_request_to_arrow_pass
-    
-    logger.info('--------send_request_to_arrow_pass')
     resource = RestClient::Resource.new(
         Settings.arrow_pass_host,
         headers: {
           "APS-CLIENT" => Settings.client.app_key
         }
       )
-    logger.info('--------send_request_to_arrow_pass---1')
       
     response = resource["/api/ts/events/#{event.id}/purchases.json"].post(
                                URI.unescape({
@@ -39,8 +36,6 @@ class Purchase < ActiveRecord::Base
                                    },
                                  ]
                                }.to_param)
-                              )  
-    logger.info('--------send_request_to_arrow_pass---2')
-                              
+                              )
   end  
 end
