@@ -7,7 +7,10 @@
           <p>
             <%= link_to 'Buy ticket', new_event_purchase_path(event), class: 'btn btn-primary btn-large' %>
           </p>
-          <span>Total purchases: <%= event.purchases.count %></span>
+          <span>
+            Total purchases: 
+            <%= link_to event.purchases.count, event_purchases_path(event) %>
+          </span>
         </div>
       </div>  
     </div>  

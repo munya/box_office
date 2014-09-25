@@ -5,7 +5,7 @@ class PurchasesController < ApplicationController
   # GET /purchases
   # GET /purchases.json
   def index
-    @purchases = Purchase.all
+    @purchases = @event.purchases
   end
 
   # GET /purchases/1
@@ -29,9 +29,6 @@ class PurchasesController < ApplicationController
 
     respond_to do |format|
       if @purchase.save
-        
-        logger.info('--------after create---')
-        
         format.html { redirect_to events_path, notice: 'Purchase was successfully created.' }
         format.json { render :show, status: :created, location: @purchase }
       else
