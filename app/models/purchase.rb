@@ -1,9 +1,27 @@
 class Purchase < ActiveRecord::Base
   belongs_to :event
+  has_many :tickets
   
+  before_create :setup_tickets
   after_create :send_request_to_arrow_pass
   
+  attr_accessor :total_tickets
+  
   private
+  
+  def setup_tickets
+    (0..(total_tickets.to_i-1)).each do |n|
+      tickets.build(
+        {
+          number: "#{Settings.client.app_key} - #{SecureRandom.hex(8)}",
+          options: {
+            raw: rand(40), 
+            seat: rand(60)
+            }
+        } 
+      )
+    end
+  end
   
   def send_request_to_arrow_pass
     resource = RestClient::Resource.new(
@@ -19,22 +37,12 @@ class Purchase < ActiveRecord::Base
                                    name: name, 
                                    email: email
                                    }, 
-                                 purchased_tickets: [
+                                 purchased_tickets: tickets.map do |ticket|
                                    {
-                                   number: 'ticket1',
-                                   options: {
-                                     raw: 10, 
-                                     seat: 20
-                                     }
-                                   },
-                                   {
-                                   number: 'ticket2',
-                                   options: {
-                                     raw: 10, 
-                                     seat: 21
-                                     }
-                                   },
-                                 ]
+                                     number: ticket.number,
+                                     options: ticket.options
+                                   }
+                                 end
                                }.to_param)
                               )
   end  

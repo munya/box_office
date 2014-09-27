@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922144439) do
+ActiveRecord::Schema.define(version: 20140927061926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
+  enable_extension "hstore"
 
   create_table "events", force: true do |t|
     t.string   "identifier"
@@ -27,6 +28,14 @@ ActiveRecord::Schema.define(version: 20140922144439) do
     t.integer  "event_id"
     t.string   "email"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tickets", force: true do |t|
+    t.string   "number"
+    t.integer  "purchase_id"
+    t.hstore   "options"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

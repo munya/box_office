@@ -1,0 +1,27 @@
+Event: <%= @event.identifier %>
+Purchase: <%= @purchase.email %>
+
+<%- model_class = Ticket -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:number) %></th>
+      <th><%= model_class.human_attribute_name(:options) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.id %></td>
+        <td><%= ticket.number %></td>
+        <td><%= ticket.options %></td>
+        <td><%=l ticket.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
