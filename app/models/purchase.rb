@@ -24,26 +24,30 @@ class Purchase < ActiveRecord::Base
   end
   
   def send_request_to_arrow_pass
+    options = {
+      event_id: event.id, 
+      purchase: {
+        name: name, 
+        email: email
+      }, 
+      purchased_tickets: tickets.map do |ticket|
+        {
+          number: ticket.number,
+          options: ticket.options.to_symbol_keys
+        }
+      end
+    }
+    
     resource = RestClient::Resource.new(
         Settings.arrow_pass_host,
         headers: {
-          "APS-CLIENT" => Settings.client.app_key
+          "APS-CLIENT" => Settings.client.app_key,
+          "SIGN-CODE" => options.sign(Settings.client.app_secret)
         }
       )
       
     response = resource["/api/ts/events/#{event.id}/purchases.json"].post(
-                               URI.unescape({
-                                 purchase: {
-                                   name: name, 
-                                   email: email
-                                   }, 
-                                 purchased_tickets: tickets.map do |ticket|
-                                   {
-                                     number: ticket.number,
-                                     options: ticket.options
-                                   }
-                                 end
-                               }.to_param)
+                               URI.unescape(options.to_param)
                               )
   end  
 end

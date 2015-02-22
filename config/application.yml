@@ -2,6 +2,7 @@ defaults: &defaults
   arrow_pass_host: 'http://arrow-pass.dev'
   client:
     app_key: 'DemoBoxOffice'
+    app_secret: 'secret'
     
 development:
   <<: *defaults
