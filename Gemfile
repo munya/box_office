@@ -42,3 +42,4 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 gem 'rest_client'
 gem 'settingslogic'
 gem 'ruby-hmac'
+gem 'faker' #github: 'stympy/faker.git'

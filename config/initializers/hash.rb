@@ -30,7 +30,12 @@ class Hash
   end 
   
   def sign(secret)
-    sign_code = Base64.encode64(HMAC::SHA1.digest(secret, self.canonicalize_to_string)).strip
+    canonicalized_string = self.canonicalize_to_string
+    
+    Rails.logger.debug "Secret: #{secret.inspect}"
+    Rails.logger.debug "Canonicalized: #{canonicalized_string.inspect}"
+    
+    sign_code = Base64.encode64(HMAC::SHA1.digest(secret, canonicalized_string)).strip
     sign_code
   end
   

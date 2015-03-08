@@ -15,9 +15,10 @@ class Purchase < ActiveRecord::Base
         {
           number: "#{Settings.client.app_key} - #{SecureRandom.hex(8)}",
           options: {
-            raw: rand(40), 
-            seat: rand(60)
-            }
+            title: Faker::Company.name,
+            owner_name: [Faker::Name.name, Faker::Name.name].join(' '),
+            owner_phone: Faker::PhoneNumber.cell_phone
+          }
         } 
       )
     end
@@ -28,12 +29,17 @@ class Purchase < ActiveRecord::Base
       event_id: event.id, 
       purchase: {
         name: name, 
-        email: email
+        email: email,
+        identifier: Time.now.to_i
       }, 
       purchased_tickets: tickets.map do |ticket|
         {
           number: ticket.number,
-          options: ticket.options.to_symbol_keys
+          options: {
+            title: ticket.options["title"],
+            owner_name: ticket.options["owner_name"],
+            owner_phone: ticket.options["owner_phone"]
+          }  
         }
       end
     }
